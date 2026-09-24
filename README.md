@@ -2,6 +2,8 @@
 
 Next.js 16 + Tailwind v4 landing, reskinned from the Evasion outdoor template onto TDG Tea content.
 
+**Live (GitHub Pages):** https://virouter-api.github.io/TDG-Tea-us/
+
 ## Scope
 
 - Homepage (hero, two featured blends, six-blend grid, origins, gallery, collection, journal, testimonials, tasting form)
