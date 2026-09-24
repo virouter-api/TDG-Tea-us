@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { asset } from "@/lib/asset";
+import { CartLink } from "@/components/cart-link";
 
 const navLinks = [
   { href: "/#products", label: "Products" },
@@ -40,18 +41,20 @@ export function Header() {
           : "none",
       }}
     >
-      <div className="flex items-center justify-between transition-all duration-300 px-2 pl-5 py-2">
+      <div className="flex items-center justify-between transition-all duration-300 px-3 pl-4 py-1.5 md:px-2 md:pl-5 md:py-2">
         <Link
           href="/"
-          className={`flex items-center gap-2.5 text-lg font-medium tracking-tight transition-colors duration-300 ${isScrolled ? "text-foreground" : "text-white"}`}
+          className={`flex items-center gap-2 text-xl font-medium tracking-tight transition-colors duration-300 md:gap-2.5 md:text-lg ${isScrolled ? "text-foreground" : "text-white"}`}
         >
-          <Image
-            src={asset("/brand/logo-mark.png?v=3")}
-            alt="TDG Tea"
-            width={62}
-            height={62}
-            className="h-14 w-14 object-contain md:h-[62px] md:w-[62px]"
-          />
+          <span className="relative h-9 w-9 shrink-0 overflow-hidden md:h-[62px] md:w-[62px]">
+            <Image
+              src={asset("/brand/logo-mark.png?v=3")}
+              alt="TDG Tea"
+              width={62}
+              height={62}
+              className="absolute -inset-[28%] h-[156%] w-[156%] max-w-none object-contain md:static md:h-[62px] md:w-[62px]"
+            />
+          </span>
           <span>TDG TEA</span>
         </Link>
 
@@ -64,6 +67,7 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-6 md:flex">
+          <CartLink className={isScrolled ? "text-foreground" : "text-white"} />
           <Link
             href="/#reserve"
             className={`px-4 py-2 text-sm font-medium transition-all rounded-full ${isScrolled ? "bg-foreground text-background hover:opacity-80" : "bg-white text-foreground hover:bg-white/90"}`}
@@ -72,14 +76,17 @@ export function Header() {
           </Link>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className={`transition-colors md:hidden ${isScrolled ? "text-foreground" : "text-white"}`}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className={`flex items-center gap-2 md:hidden ${isScrolled ? "text-foreground" : "text-white"}`}>
+          <CartLink className="text-current" />
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="transition-colors"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {isMenuOpen && (
