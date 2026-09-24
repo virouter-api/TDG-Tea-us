@@ -90,7 +90,7 @@ export function HeroSection() {
 
   return (
     <section ref={sectionRef} className="relative bg-background">
-      <div className="relative h-[72svh] min-h-[500px] overflow-hidden md:hidden">
+      <div className="relative h-screen overflow-hidden md:hidden">
         <ResponsiveHeroImage
           alt="Misty highland herb garden at dawn"
           priority
