@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
+import { asset } from "@/lib/asset";
 
 const navLinks = [
   { href: "/#products", label: "Products" },
@@ -45,7 +46,7 @@ export function Header() {
           className={`flex items-center gap-2.5 text-lg font-medium tracking-tight transition-colors duration-300 ${isScrolled ? "text-foreground" : "text-white"}`}
         >
           <Image
-            src="/brand/logo-mark.png?v=3"
+            src={asset("/brand/logo-mark.png?v=3")}
             alt="TDG Tea"
             width={62}
             height={62}

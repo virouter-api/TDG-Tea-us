@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { ResponsiveHeroImage } from "@/components/responsive-hero-image";
+import { asset } from "@/lib/asset";
 const V = "7";
-const src = (path: string) => `${path}?v=${V}`;
+const src = (path: string) => asset(`${path}?v=${V}`);
 
 
 const word = "TDG TEA";

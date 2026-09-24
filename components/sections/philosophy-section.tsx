@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { featuredPair } from "@/lib/catalog";
+import { asset } from "@/lib/asset";
 
 export function PhilosophySection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -86,7 +87,7 @@ export function PhilosophySection() {
                 }}
               >
                 <Image
-                  src="/images/herbs/oi-leaves.jpg?v=8"
+                  src={asset("/images/herbs/oi-leaves.jpg?v=8")}
                   alt="Young guava leaves"
                   fill
                   className="object-contain"

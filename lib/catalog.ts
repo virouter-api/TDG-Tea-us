@@ -1,3 +1,5 @@
+import { asset } from "./asset";
+
 export type Ingredient = {
   vn: string;
   en: string;
@@ -47,11 +49,11 @@ export const products: Product[] = [
     summary:
       "A cooling, grounded herbal blend for days when you want to feel lighter, clearer and restored.",
     tagline: "A cooling herbal blend for liver support, detoxification and refreshed energy.",
-    image: "/images/products/ca-gai-leo/packshot.jpg?v=7",
-    lifestyleImage: "/images/products/ca-gai-leo/lifestyle.jpg?v=4",
-    sceneImage: "/images/products/ca-gai-leo/scene.jpg?v=5",
-    benefitsImage: "/images/products/ca-gai-leo/benefits.webp?v=11",
-    detailImage: "/images/products/ca-gai-leo/detail.jpg?v=4",
+    image: asset("/images/products/ca-gai-leo/packshot.jpg?v=7"),
+    lifestyleImage: asset("/images/products/ca-gai-leo/lifestyle.jpg?v=4"),
+    sceneImage: asset("/images/products/ca-gai-leo/scene.jpg?v=5"),
+    benefitsImage: asset("/images/products/ca-gai-leo/benefits.webp?v=11"),
+    detailImage: asset("/images/products/ca-gai-leo/detail.jpg?v=4"),
     ingredients: [
       { vn: "Cà gai leo", en: "Solanum procumbens" },
       { vn: "Rau má", en: "Centella / Pennywort" },
@@ -84,11 +86,11 @@ export const products: Product[] = [
     summary:
       "A gentle evening infusion that helps quiet the mind and create a softer transition into rest.",
     tagline: "A soft evening infusion that helps quiet the mind and support restorative sleep.",
-    image: "/images/products/dinh-lang/packshot.jpg?v=7",
-    lifestyleImage: "/images/products/dinh-lang/lifestyle.jpg?v=4",
-    sceneImage: "/images/products/dinh-lang/scene.jpg?v=5",
-    benefitsImage: "/images/products/dinh-lang/benefits.webp?v=11",
-    detailImage: "/images/products/dinh-lang/detail.jpg?v=4",
+    image: asset("/images/products/dinh-lang/packshot.jpg?v=7"),
+    lifestyleImage: asset("/images/products/dinh-lang/lifestyle.jpg?v=4"),
+    sceneImage: asset("/images/products/dinh-lang/scene.jpg?v=5"),
+    benefitsImage: asset("/images/products/dinh-lang/benefits.webp?v=11"),
+    detailImage: asset("/images/products/dinh-lang/detail.jpg?v=4"),
     ingredients: [
       { vn: "Đinh lăng (roots, stems & leaves)", en: "Polyscias fruticosa" },
       { vn: "Lạc tiên", en: "Passionflower" },
@@ -120,11 +122,11 @@ export const products: Product[] = [
     summary:
       "A bright herbal cup with a naturally clean finish, made to support steady circulation and daily balance.",
     tagline: "A bright, grounded blend for circulation and steady everyday balance.",
-    image: "/images/products/giao-co-lam/packshot.jpg?v=7",
-    lifestyleImage: "/images/products/giao-co-lam/lifestyle.jpg?v=4",
-    sceneImage: "/images/products/giao-co-lam/scene.jpg?v=5",
-    benefitsImage: "/images/products/giao-co-lam/benefits.webp?v=11",
-    detailImage: "/images/products/giao-co-lam/detail.jpg?v=4",
+    image: asset("/images/products/giao-co-lam/packshot.jpg?v=7"),
+    lifestyleImage: asset("/images/products/giao-co-lam/lifestyle.jpg?v=4"),
+    sceneImage: asset("/images/products/giao-co-lam/scene.jpg?v=5"),
+    benefitsImage: asset("/images/products/giao-co-lam/benefits.webp?v=11"),
+    detailImage: asset("/images/products/giao-co-lam/detail.jpg?v=4"),
     ingredients: [
       { vn: "Giảo cổ lam", en: "Gynostemma pentaphyllum" },
       { vn: "Sương sáo", en: "Chinese mesona / Black grass jelly" },
@@ -158,11 +160,11 @@ export const products: Product[] = [
     summary:
       "A light, refreshing blend for a balanced daily ritual, with a clean finish that pairs easily with meals.",
     tagline: "A clean daily cup for healthy blood sugar balance, digestion and lightness.",
-    image: "/images/products/bup-oi/packshot.jpg?v=7",
-    lifestyleImage: "/images/products/bup-oi/lifestyle.jpg?v=4",
-    sceneImage: "/images/products/bup-oi/scene.jpg?v=5",
-    benefitsImage: "/images/products/bup-oi/benefits.webp?v=11",
-    detailImage: "/images/products/bup-oi/detail.jpg?v=4",
+    image: asset("/images/products/bup-oi/packshot.jpg?v=7"),
+    lifestyleImage: asset("/images/products/bup-oi/lifestyle.jpg?v=4"),
+    sceneImage: asset("/images/products/bup-oi/scene.jpg?v=5"),
+    benefitsImage: asset("/images/products/bup-oi/benefits.webp?v=11"),
+    detailImage: asset("/images/products/bup-oi/detail.jpg?v=4"),
     ingredients: [
       { vn: "Búp ổi", en: "Young guava leaves / buds" },
       { vn: "Dây thìa canh", en: "Gymnema sylvestre" },
@@ -194,11 +196,11 @@ export const products: Product[] = [
     summary:
       "A warming, aromatic cup for slow mornings, settled digestion and a little extra support through the day.",
     tagline: "A warming blend to soothe digestion, support immunity and settle the body.",
-    image: "/images/products/gung-dang-sam/packshot.jpg?v=7",
-    lifestyleImage: "/images/products/gung-dang-sam/lifestyle.jpg?v=4",
-    sceneImage: "/images/products/gung-dang-sam/scene.jpg?v=5",
-    benefitsImage: "/images/products/gung-dang-sam/benefits.webp?v=11",
-    detailImage: "/images/products/gung-dang-sam/detail.jpg?v=4",
+    image: asset("/images/products/gung-dang-sam/packshot.jpg?v=7"),
+    lifestyleImage: asset("/images/products/gung-dang-sam/lifestyle.jpg?v=4"),
+    sceneImage: asset("/images/products/gung-dang-sam/scene.jpg?v=5"),
+    benefitsImage: asset("/images/products/gung-dang-sam/benefits.webp?v=11"),
+    detailImage: asset("/images/products/gung-dang-sam/detail.jpg?v=4"),
     ingredients: [
       { vn: "Gừng", en: "Ginger" },
       { vn: "Đẳng sâm", en: "Codonopsis / Poor man's ginseng" },
@@ -231,11 +233,11 @@ export const products: Product[] = [
     summary:
       "A herb-forward blend for everyday movement, designed to bring comfort and a clean, earthy finish.",
     tagline: "A herb-forward cup for joints, bones and a more comfortable daily rhythm.",
-    image: "/images/products/tia-to/packshot.jpg?v=7",
-    lifestyleImage: "/images/products/tia-to/lifestyle.jpg?v=4",
-    sceneImage: "/images/products/tia-to/scene.jpg?v=5",
-    benefitsImage: "/images/products/tia-to/benefits.webp?v=11",
-    detailImage: "/images/products/tia-to/detail.jpg?v=4",
+    image: asset("/images/products/tia-to/packshot.jpg?v=7"),
+    lifestyleImage: asset("/images/products/tia-to/lifestyle.jpg?v=4"),
+    sceneImage: asset("/images/products/tia-to/scene.jpg?v=5"),
+    benefitsImage: asset("/images/products/tia-to/benefits.webp?v=11"),
+    detailImage: asset("/images/products/tia-to/detail.jpg?v=4"),
     ingredients: [
       { vn: "Tía tô", en: "Perilla leaves" },
       { vn: "Tầm bóp", en: "Cutleaf groundcherry / Physalis angulata" },

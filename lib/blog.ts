@@ -1,3 +1,5 @@
+import { asset } from "./asset";
+
 export type BlogBlock =
   | { type: "p"; text: string }
   | { type: "h2"; text: string }
@@ -24,7 +26,7 @@ export const posts: BlogPost[] = [
     label: "Article 01 · Herbal wellness",
     title: "Caring for your liver, one daily ritual at a time",
     lede: "A closer look at the six-herb Cà Gai Leo Rau Má blend and the everyday habits that support a lighter, more balanced feeling.",
-    cover: "/images/blog/caring-for-your-liver/cover.webp",
+    cover: asset("/images/blog/caring-for-your-liver/cover.webp"),
     coverAlt: "Vietnamese highland herbs for Cà Gai Leo Rau Má TDG Tea",
     blocks: [
       {
@@ -55,12 +57,12 @@ export const posts: BlogPost[] = [
         type: "media",
         images: [
           {
-            src: "/images/blog/caring-for-your-liver/herbs.webp",
+            src: asset("/images/blog/caring-for-your-liver/herbs.webp"),
             alt: "Natural herbs used in the Cà Gai Leo Rau Má blend",
             caption: "Six natural herbs, traditionally blended for a balanced daily cup.",
           },
           {
-            src: "/images/blog/caring-for-your-liver/cup.webp",
+            src: asset("/images/blog/caring-for-your-liver/cup.webp"),
             alt: "A warm cup of herbal tea",
             caption: "A warm tea ritual that fits naturally into the day.",
           },
@@ -102,7 +104,7 @@ export const posts: BlogPost[] = [
     label: "Article 02 · TDG Tea guide",
     title: "Decoding the purifying power of 6 natural herbs",
     lede: "Why a considered herbal ritual can be a gentle companion for modern lives shaped by late nights, stress, and irregular meals.",
-    cover: "/images/blog/six-natural-herbs/cover.webp",
+    cover: asset("/images/blog/six-natural-herbs/cover.webp"),
     coverAlt: "Sustainable herb gardens for TDG Tea",
     blocks: [
       {
@@ -159,12 +161,12 @@ export const posts: BlogPost[] = [
         type: "media",
         images: [
           {
-            src: "/images/blog/six-natural-herbs/pouch.webp",
+            src: asset("/images/blog/six-natural-herbs/pouch.webp"),
             alt: "TDG Cà Gai Leo Rau Má tea packaging",
             caption: "TDG’s herbal tea ritual, grounded in Vietnamese ingredients.",
           },
           {
-            src: "/images/blog/six-natural-herbs/ingredients.webp",
+            src: asset("/images/blog/six-natural-herbs/ingredients.webp"),
             alt: "Natural herbal ingredients for TDG Tea",
             caption: "The six ingredients work together as a considered blend.",
           },
@@ -218,7 +220,7 @@ export const posts: BlogPost[] = [
         type: "media",
         images: [
           {
-            src: "/images/blog/six-natural-herbs/ingredients-2.webp",
+            src: asset("/images/blog/six-natural-herbs/ingredients-2.webp"),
             alt: "Herbal ingredients prepared for a TDG Tea blend",
             caption: "From ingredient selection to a steady daily ritual.",
           },

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { asset } from "@/lib/asset";
 
 function ScrollRevealText({ text }: { text: string }) {
   const containerRef = useRef<HTMLParagraphElement>(null);
@@ -57,25 +58,25 @@ function ScrollRevealText({ text }: { text: string }) {
 
 const sideImages = [
   {
-    src: "/images/products/ca-gai-leo/lifestyle.jpg?v=2",
+    src: asset("/images/products/ca-gai-leo/lifestyle.jpg?v=2"),
     alt: "Cà Gai Leo fields at dusk",
     position: "left",
     span: 1,
   },
   {
-    src: "/images/products/bup-oi/lifestyle.jpg?v=2",
+    src: asset("/images/products/bup-oi/lifestyle.jpg?v=2"),
     alt: "Búp Ổi Thìa Canh in the highlands",
     position: "left",
     span: 1,
   },
   {
-    src: "/images/products/tia-to/lifestyle.jpg?v=2",
+    src: asset("/images/products/tia-to/lifestyle.jpg?v=2"),
     alt: "Tía Tô Tầm Bóp in the field",
     position: "right",
     span: 1,
   },
   {
-    src: "/images/products/gung-dang-sam/detail.jpg?v=2",
+    src: asset("/images/products/gung-dang-sam/detail.jpg?v=2"),
     alt: "Gừng Đẳng Sâm lifestyle",
     position: "right",
     span: 1,
@@ -161,7 +162,7 @@ export function TechnologySection() {
               }}
             >
               <Image
-                src="/images/origins/farmer.jpg?v=3"
+                src={asset("/images/origins/farmer.jpg?v=3")}
                 alt="Highland herb fields at dawn"
                 fill
                 className="object-cover"
