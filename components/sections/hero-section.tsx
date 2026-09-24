@@ -90,7 +90,7 @@ export function HeroSection() {
 
   return (
     <section ref={sectionRef} className="relative bg-background">
-      <div className="relative h-screen overflow-hidden md:hidden">
+      <div className="relative h-[calc(100svh-64px)] min-h-[640px] overflow-hidden md:hidden">
         <ResponsiveHeroImage
           alt="Misty highland herb garden at dawn"
           priority
@@ -99,7 +99,20 @@ export function HeroSection() {
 
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent px-6 pb-10 pt-32">
           <h1 className="text-[20vw] font-medium leading-[0.8] tracking-tighter text-white">
-            {word}
+            {word.split("").map((letter, index) => (
+              <span
+                key={index}
+                className="inline-block animate-[slideUp_0.8s_ease-out_forwards] opacity-0"
+                style={{
+                  animationDelay: `${index * 0.08}s`,
+                  transition: "all 1.5s",
+                  transitionTimingFunction: "cubic-bezier(0.86, 0, 0.07, 1)",
+                  width: letter === " " ? "0.28em" : undefined,
+                }}
+              >
+                {letter === " " ? "\u00A0" : letter}
+              </span>
+            ))}
           </h1>
         </div>
       </div>
