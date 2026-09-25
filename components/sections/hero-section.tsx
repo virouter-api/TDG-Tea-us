@@ -79,6 +79,9 @@ export function HeroSection() {
             <p className="mb-3 text-[10px] uppercase tracking-[0.22em] text-white/75">Rooted in Vietnam · Made for everyday rituals</p>
             <h1 className="max-w-[11ch] text-[clamp(2.7rem,11vw,4.4rem)] font-medium leading-[0.88] tracking-[-0.06em]">Vietnamese herbal tea for your daily rhythm</h1>
             <p className="mt-4 max-w-[30ch] text-sm leading-relaxed text-white/80">Thoughtful blends of Vietnamese botanicals, made to meet the pace of your day.</p>
+            <p className="mt-4 flex max-w-[31ch] items-center gap-3 border-l border-[#d97706] pl-3 text-xs leading-relaxed text-white/85">
+              Over 1 million boxes sold in Vietnam since launch.
+            </p>
             <div className="mt-5 flex flex-col gap-2">
               <a href="#collection" className="inline-flex h-11 items-center justify-center rounded-full bg-white px-6 text-sm font-medium text-black">Shop the collection</a>
               <a href="#ritual" className="inline-flex h-11 items-center justify-center rounded-full border border-white/50 px-6 text-sm font-medium text-white">Explore the ritual</a>
@@ -102,6 +105,9 @@ export function HeroSection() {
                     <p className="mb-4 text-[10px] uppercase tracking-[0.22em] text-white/75">Rooted in Vietnam · Made for everyday rituals</p>
                     <h1 className="max-w-[11ch] text-[clamp(3.5rem,6.7vw,7rem)] font-medium leading-[0.88] tracking-[-0.06em]">Vietnamese herbal tea for your daily rhythm</h1>
                     <p className="mt-5 max-w-[34ch] text-sm leading-relaxed text-white/80">Thoughtful blends of Vietnamese botanicals, made to meet the pace of your day.</p>
+                    <p className="mt-4 flex max-w-[36ch] items-center gap-3 border-l border-[#d97706] pl-3 text-xs leading-relaxed text-white/85">
+                      Over 1 million boxes sold in Vietnam since launch.
+                    </p>
                     <div className="mt-5 flex gap-3">
                       <a href="#collection" className="inline-flex h-10 items-center justify-center rounded-full bg-white px-5 text-xs font-medium text-black">Shop the collection</a>
                       <a href="#ritual" className="inline-flex h-10 items-center justify-center rounded-full border border-white/50 px-5 text-xs font-medium text-white">Explore the ritual</a>
