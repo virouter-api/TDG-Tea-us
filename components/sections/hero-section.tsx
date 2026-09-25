@@ -42,6 +42,8 @@ export function HeroSection() {
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+
     const handleScroll = () => {
       if (!sectionRef.current) return;
 
@@ -53,11 +55,24 @@ export function HeroSection() {
       setScrollProgress(progress);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    const syncMotionMode = () => {
+      window.removeEventListener("scroll", handleScroll);
+
+      if (mediaQuery.matches) {
+        setScrollProgress(0);
+        return;
+      }
+
+      handleScroll();
+      window.addEventListener("scroll", handleScroll, { passive: true });
+    };
+
+    syncMotionMode();
+    mediaQuery.addEventListener("change", syncMotionMode);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      mediaQuery.removeEventListener("change", syncMotionMode);
     };
   }, []);
 
@@ -75,7 +90,34 @@ export function HeroSection() {
 
   return (
     <section ref={sectionRef} className="relative bg-background">
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div className="relative h-[calc(100svh-64px)] min-h-[640px] overflow-hidden md:hidden">
+        <ResponsiveHeroImage
+          alt="Misty highland herb garden at dawn"
+          priority
+          className="object-cover object-center"
+        />
+
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent px-6 pb-10 pt-32">
+          <h1 className="text-[20vw] font-medium leading-[0.8] tracking-tighter text-white">
+            {word.split("").map((letter, index) => (
+              <span
+                key={index}
+                className="inline-block animate-[slideUp_0.8s_ease-out_forwards] opacity-0"
+                style={{
+                  animationDelay: `${index * 0.08}s`,
+                  transition: "all 1.5s",
+                  transitionTimingFunction: "cubic-bezier(0.86, 0, 0.07, 1)",
+                  width: letter === " " ? "0.28em" : undefined,
+                }}
+              >
+                {letter === " " ? "\u00A0" : letter}
+              </span>
+            ))}
+          </h1>
+        </div>
+      </div>
+
+      <div className="sticky top-0 hidden h-screen overflow-hidden md:block">
         <div className="flex h-full w-full items-center justify-center">
           <div
             className="relative flex h-full w-full items-stretch justify-center"
@@ -175,7 +217,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div className="h-[200vh]" />
+      <div className="hidden h-[200vh] md:block" />
 
       <div className="px-6 pt-32 pb-28 md:pt-48 md:px-12 md:pb-36 lg:px-20 lg:pt-56 lg:pb-44">
         <p className="mx-auto max-w-2xl text-center text-2xl leading-relaxed text-muted-foreground md:text-3xl lg:text-[2.5rem] lg:leading-snug">
