@@ -25,6 +25,7 @@ export type Product = {
   sceneImage: string;
   benefitsImage: string;
   detailImage: string;
+  tastingNotes: string[];
   ingredients: Ingredient[];
   benefits: string[];
   audience: string;
@@ -54,6 +55,7 @@ export const products: Product[] = [
     sceneImage: asset("/images/products/ca-gai-leo/scene.jpg?v=5"),
     benefitsImage: asset("/images/products/ca-gai-leo/benefits.webp?v=11"),
     detailImage: asset("/images/products/ca-gai-leo/detail.jpg?v=4"),
+    tastingNotes: ["Clean herbal aroma", "Cooling finish", "Light natural sweetness"],
     ingredients: [
       { vn: "Cà gai leo", en: "Solanum procumbens" },
       { vn: "Rau má", en: "Centella / Pennywort" },
@@ -91,6 +93,7 @@ export const products: Product[] = [
     sceneImage: asset("/images/products/dinh-lang/scene.jpg?v=5"),
     benefitsImage: asset("/images/products/dinh-lang/benefits.webp?v=11"),
     detailImage: asset("/images/products/dinh-lang/detail.jpg?v=4"),
+    tastingNotes: ["Soft floral aroma", "Rounded herbal body", "Gentle finish"],
     ingredients: [
       { vn: "Đinh lăng (roots, stems & leaves)", en: "Polyscias fruticosa" },
       { vn: "Lạc tiên", en: "Passionflower" },
@@ -127,6 +130,7 @@ export const products: Product[] = [
     sceneImage: asset("/images/products/giao-co-lam/scene.jpg?v=5"),
     benefitsImage: asset("/images/products/giao-co-lam/benefits.webp?v=11"),
     detailImage: asset("/images/products/giao-co-lam/detail.jpg?v=4"),
+    tastingNotes: ["Bright green herbs", "Clean mineral edge", "Fresh finish"],
     ingredients: [
       { vn: "Giảo cổ lam", en: "Gynostemma pentaphyllum" },
       { vn: "Sương sáo", en: "Chinese mesona / Black grass jelly" },
@@ -165,6 +169,7 @@ export const products: Product[] = [
     sceneImage: asset("/images/products/bup-oi/scene.jpg?v=5"),
     benefitsImage: asset("/images/products/bup-oi/benefits.webp?v=11"),
     detailImage: asset("/images/products/bup-oi/detail.jpg?v=4"),
+    tastingNotes: ["Fresh leafy aroma", "Subtle sweetness", "Crisp finish"],
     ingredients: [
       { vn: "Búp ổi", en: "Young guava leaves / buds" },
       { vn: "Dây thìa canh", en: "Gymnema sylvestre" },
@@ -201,6 +206,7 @@ export const products: Product[] = [
     sceneImage: asset("/images/products/gung-dang-sam/scene.jpg?v=5"),
     benefitsImage: asset("/images/products/gung-dang-sam/benefits.webp?v=11"),
     detailImage: asset("/images/products/gung-dang-sam/detail.jpg?v=4"),
+    tastingNotes: ["Warm ginger spice", "Rounded root aroma", "Long gentle finish"],
     ingredients: [
       { vn: "Gừng", en: "Ginger" },
       { vn: "Đẳng sâm", en: "Codonopsis / Poor man's ginseng" },
@@ -238,6 +244,7 @@ export const products: Product[] = [
     sceneImage: asset("/images/products/tia-to/scene.jpg?v=5"),
     benefitsImage: asset("/images/products/tia-to/benefits.webp?v=11"),
     detailImage: asset("/images/products/tia-to/detail.jpg?v=4"),
+    tastingNotes: ["Aromatic perilla", "Earthy herb body", "Dry clean finish"],
     ingredients: [
       { vn: "Tía tô", en: "Perilla leaves" },
       { vn: "Tầm bóp", en: "Cutleaf groundcherry / Physalis angulata" },

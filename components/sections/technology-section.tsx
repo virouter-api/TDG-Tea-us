@@ -241,7 +241,7 @@ export function TechnologySection() {
         </div>
       </div>
 
-      <div className="hidden h-[200vh] md:block" />
+      <div className="hidden h-[115vh] md:block" />
 
       <div
         ref={textSectionRef}

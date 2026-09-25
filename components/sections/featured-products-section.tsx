@@ -33,7 +33,16 @@ export function FeaturedProductsSection({ products }: { products: Product[] }) {
               <p className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
                 {product.label}
               </p>
-              <h3 className="text-foreground text-xl font-semibold">{product.shortName}</h3>
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="text-foreground text-xl font-semibold">{product.shortName}</h3>
+                <span className="shrink-0 text-sm font-medium text-foreground">{product.price}</span>
+              </div>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                {product.tastingNotes.join(" · ")}
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                {product.ingredients.slice(0, 3).map((ingredient) => ingredient.vn).join(" · ")}
+              </p>
             </div>
           </Link>
         ))}

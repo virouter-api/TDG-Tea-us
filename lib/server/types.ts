@@ -85,6 +85,21 @@ export type MediaAsset = {
   createdAt: string
 }
 
+export type TastingRequest = {
+  id: string
+  name: string
+  email: string
+  note?: string
+  status: "new" | "contacted"
+  createdAt: string
+}
+
+export type TastingRequestInput = {
+  name: string
+  email: string
+  note?: string
+}
+
 export type StoreSettings = {
   brand: string
   market: string
@@ -102,6 +117,7 @@ export type StoreSnapshot = {
   inventory: InventoryRow[]
   settings: StoreSettings
   mediaAssets: MediaAsset[]
+  tastingRequests: TastingRequest[]
 }
 
 export type CheckoutInput = {

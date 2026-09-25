@@ -13,6 +13,8 @@ import {
   type ProductPatch,
   type StoreSettings,
   type StoreSnapshot,
+  type TastingRequest,
+  type TastingRequestInput,
 } from "@/lib/server/types"
 import type { BlogPost } from "@/lib/blog"
 import type { Product } from "@/lib/catalog"
@@ -81,10 +83,23 @@ export function createStore(options: StoreOptions) {
     const row = selectSnapshot.get() as { payload: string } | undefined
     if (row) {
       const parsed = JSON.parse(row.payload) as StoreSnapshot
+      let changed = false
+      for (const product of parsed.products) {
+        if (!Array.isArray(product.tastingNotes)) {
+          const catalogProduct = catalogProducts.find((item) => item.slug === product.slug)
+          product.tastingNotes = catalogProduct?.tastingNotes ?? []
+          changed = true
+        }
+      }
       if (!Array.isArray(parsed.mediaAssets)) {
         parsed.mediaAssets = legacyMediaAssets(parsed.products, parsed.posts)
-        saveSnapshot.run(JSON.stringify(parsed), new Date().toISOString())
+        changed = true
       }
+      if (!Array.isArray(parsed.tastingRequests)) {
+        parsed.tastingRequests = []
+        changed = true
+      }
+      if (changed) saveSnapshot.run(JSON.stringify(parsed), new Date().toISOString())
       return parsed
     }
     let seeded = seedSnapshot()
@@ -93,6 +108,18 @@ export function createStore(options: StoreOptions) {
       seeded = JSON.parse(legacy) as StoreSnapshot
     } catch {
       // No legacy JSON snapshot; seed from the checked-in catalog.
+    }
+    for (const product of seeded.products) {
+      if (!Array.isArray(product.tastingNotes)) {
+        const catalogProduct = catalogProducts.find((item) => item.slug === product.slug)
+        product.tastingNotes = catalogProduct?.tastingNotes ?? []
+      }
+    }
+    if (!Array.isArray(seeded.mediaAssets)) {
+      seeded.mediaAssets = legacyMediaAssets(seeded.products, seeded.posts)
+    }
+    if (!Array.isArray(seeded.tastingRequests)) {
+      seeded.tastingRequests = []
     }
     saveSnapshot.run(JSON.stringify(seeded), new Date().toISOString())
     return seeded
@@ -319,6 +346,29 @@ export function createStore(options: StoreOptions) {
         if (referenced) throw new StoreError("Media is still assigned to a product or journal post")
         snapshot.mediaAssets.splice(index, 1)
         return structuredClone(asset)
+      })
+    },
+
+    createTastingRequest(input: TastingRequestInput): Promise<TastingRequest> {
+      return mutate((snapshot) => {
+        const name = input.name?.trim()
+        const email = input.email?.trim().toLowerCase()
+        const note = input.note?.trim() || undefined
+        if (!name) throw new StoreError("Full name is required")
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          throw new StoreError("A valid email is required")
+        }
+        if (note && note.length > 1000) throw new StoreError("Message is too long")
+        const tastingRequest: TastingRequest = {
+          id: `TST-${Date.now().toString(36).toUpperCase()}`,
+          name,
+          email,
+          note,
+          status: "new",
+          createdAt: new Date().toISOString(),
+        }
+        snapshot.tastingRequests.unshift(tastingRequest)
+        return structuredClone(tastingRequest)
       })
     },
 

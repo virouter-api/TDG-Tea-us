@@ -87,5 +87,6 @@ export function seedSnapshot(): StoreSnapshot {
     inventory,
     settings: { ...DEFAULT_SETTINGS },
     mediaAssets: legacyMediaAssets(),
+    tastingRequests: [],
   }
 }

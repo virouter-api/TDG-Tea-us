@@ -26,6 +26,8 @@ const quotes = [
 
 export function TestimonialsSection() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   return (
     <section id="about" className="bg-background">
@@ -58,8 +60,7 @@ export function TestimonialsSection() {
             Book a tasting
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Come visit our tea space. This form currently simulates a successful request — we will
-            confirm your appointment by email.
+            Come visit our tea space. Send a request and our team will confirm your appointment by email.
           </p>
 
           {submitted ? (
@@ -69,9 +70,27 @@ export function TestimonialsSection() {
           ) : (
             <form
               className="mt-10 space-y-4 text-left"
-              onSubmit={(event) => {
+              onSubmit={async (event) => {
                 event.preventDefault();
-                setSubmitted(true);
+                setSubmitting(true);
+                setError("");
+                const form = event.currentTarget;
+                const payload = Object.fromEntries(new FormData(form).entries());
+                try {
+                  const response = await fetch("/api/tasting", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                  });
+                  const result = (await response.json()) as { error?: string };
+                  if (!response.ok) throw new Error(result.error || "Unable to send request");
+                  setSubmitted(true);
+                  form.reset();
+                } catch (requestError) {
+                  setError(requestError instanceof Error ? requestError.message : "Unable to send request");
+                } finally {
+                  setSubmitting(false);
+                }
               }}
             >
               <label className="block">
@@ -105,11 +124,17 @@ export function TestimonialsSection() {
                   className="mt-2 w-full rounded-2xl border border-border bg-background px-5 py-3 text-sm outline-none focus:ring-1 focus:ring-foreground"
                 />
               </label>
+              {error && (
+                <p role="alert" className="text-sm text-red-700">
+                  {error}
+                </p>
+              )}
               <button
                 type="submit"
-                className="w-full rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background"
+                disabled={submitting}
+                className="w-full rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background disabled:cursor-wait disabled:opacity-60"
               >
-                Request a visit
+                {submitting ? "Sending request…" : "Request a visit"}
               </button>
             </form>
           )}

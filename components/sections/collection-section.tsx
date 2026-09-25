@@ -36,6 +36,14 @@ export function CollectionSection({ products }: { products: Product[] }) {
                       {product.shortName}
                     </h3>
                     <p className="mt-2 text-sm text-muted-foreground">{product.tagline}</p>
+                    <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+                      <span className="font-medium text-foreground">Notes:</span>{" "}
+                      {product.tastingNotes.join(" · ")}
+                    </p>
+                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                      <span className="font-medium text-foreground">Ingredients:</span>{" "}
+                      {product.ingredients.slice(0, 3).map((ingredient) => ingredient.vn).join(" · ")}
+                    </p>
                   </div>
                   <span className="text-lg font-medium text-foreground">{product.price}</span>
                 </div>
@@ -62,6 +70,14 @@ export function CollectionSection({ products }: { products: Product[] }) {
                       {product.shortName}
                     </h3>
                     <p className="mt-2 text-sm text-muted-foreground">{product.tagline}</p>
+                    <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+                      <span className="font-medium text-foreground">Notes:</span>{" "}
+                      {product.tastingNotes.join(" · ")}
+                    </p>
+                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                      <span className="font-medium text-foreground">Ingredients:</span>{" "}
+                      {product.ingredients.slice(0, 3).map((ingredient) => ingredient.vn).join(" · ")}
+                    </p>
                   </div>
                   <span className="font-medium text-foreground text-2xl">{product.price}</span>
                 </div>
