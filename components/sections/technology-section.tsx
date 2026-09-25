@@ -121,7 +121,18 @@ export function TechnologySection() {
 
   return (
     <section id="origins" ref={sectionRef} className="relative bg-foreground">
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div className="relative h-[78svh] min-h-[500px] overflow-hidden md:hidden">
+        <div className="relative h-full overflow-hidden">
+          <Image src={asset("/images/origins/farmer.jpg?v=3")} alt="Highland herb fields at dawn" fill className="object-cover" />
+          <div className="absolute inset-0 bg-foreground/40" />
+          <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
+            <h2 className="max-w-[10ch] text-5xl font-medium leading-[0.95] tracking-tight text-white">From Highlands.<br />To Your Cup.</h2>
+          </div>
+        </div>
+      </div>
+
+      <div className="hidden md:block">
+        <div className="sticky top-0 h-screen overflow-hidden">
         <div className="flex h-full w-full items-center justify-center">
           <div
             className="relative flex h-full w-full items-stretch justify-center"
@@ -227,9 +238,10 @@ export function TechnologySection() {
             </div>
           </div>
         </div>
+        </div>
       </div>
 
-      <div className="h-[200vh]" />
+      <div className="hidden h-[200vh] md:block" />
 
       <div
         ref={textSectionRef}

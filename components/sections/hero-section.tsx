@@ -70,19 +70,11 @@ export function HeroSection() {
 
   return (
     <section ref={sectionRef} className="relative bg-[#090909]">
-      {/* Mobile: static botanical triptych. No scroll-driven transform or oversized spacer. */}
-      <div className="relative flex h-[90svh] min-h-[560px] w-full items-stretch gap-2 overflow-hidden px-2 pb-2 pt-20 md:hidden">
-        <div className="flex w-[24%] flex-col gap-2 pt-[8%]">
-          <ImageTile image={sideImages[0]} />
-          <ImageTile image={sideImages[1]} />
-        </div>
-        <div className="relative min-w-0 flex-1 overflow-hidden rounded-[22px] bg-black">
+      {/* Mobile: one stable hero image. Side imagery and scroll animation stay desktop-only. */}
+      <div className="relative h-[80svh] min-h-[520px] w-full overflow-hidden px-4 pb-4 pt-20 md:hidden">
+        <div className="relative h-full overflow-hidden rounded-[22px] bg-black">
           <ResponsiveHeroImage alt="Misty highland herb garden at dawn" priority />
           <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
-        </div>
-        <div className="flex w-[24%] flex-col gap-2 pt-[8%]">
-          <ImageTile image={sideImages[2]} />
-          <ImageTile image={sideImages[3]} />
         </div>
       </div>
 
@@ -122,8 +114,3 @@ export function HeroSection() {
 
 export default HeroSection;
 
-@media (prefers-reduced-motion: reduce) {
-  .will-change-transform {
-    transform: none !important;
-  }
-}
