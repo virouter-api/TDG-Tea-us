@@ -60,7 +60,7 @@ export function TestimonialsSection() {
             Book a tasting
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Come visit our tea space. Send a request and our team will confirm your appointment by email.
+            Come visit our tea space. Send a request and our team will contact you to confirm your appointment.
           </p>
 
           {submitted ? (

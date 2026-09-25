@@ -203,6 +203,46 @@ export function AdminDashboard({ snapshot }: { snapshot: StoreSnapshot }) {
       <Card>
         <CardHeader className="flex-row items-center justify-between">
           <div>
+            <CardTitle>Tasting requests</CardTitle>
+            <CardDescription>New visit requests from the storefront</CardDescription>
+          </div>
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="#tasting-requests">{snapshot.tastingRequests.length} total</Link>
+          </Button>
+        </CardHeader>
+        <CardContent id="tasting-requests" className="px-0">
+          {snapshot.tastingRequests.length === 0 ? (
+            <p className="px-6 text-sm text-muted-foreground">No tasting requests yet.</p>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="pl-6">Guest</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Message</TableHead>
+                  <TableHead className="pr-6 text-right">Received</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {snapshot.tastingRequests.slice(0, 6).map((request) => (
+                  <TableRow key={request.id}>
+                    <TableCell className="pl-6 font-medium">{request.name}</TableCell>
+                    <TableCell>{request.email}</TableCell>
+                    <TableCell className="max-w-sm truncate">{request.note || "—"}</TableCell>
+                    <TableCell className="pr-6 text-right text-muted-foreground">
+                      {new Date(request.createdAt).toLocaleDateString("en-US")}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader className="flex-row items-center justify-between">
+          <div>
             <CardTitle>Catalog</CardTitle>
             <CardDescription>SKUs currently on the storefront</CardDescription>
           </div>
