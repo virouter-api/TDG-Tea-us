@@ -18,8 +18,8 @@ export default async function Home() {
     <main className="min-h-screen overflow-x-clip bg-background">
       <Header />
       <HeroSection />
-      <PhilosophySection />
       <FeaturedProductsSection products={snapshot.products} />
+      <PhilosophySection />
       <TechnologySection />
       <GallerySection />
       <CollectionSection products={snapshot.products} />
