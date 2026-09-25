@@ -71,7 +71,7 @@ export function HeroSection() {
   return (
     <section ref={sectionRef} className="relative bg-[#090909]">
       {/* Mobile: one stable hero image. Side imagery and scroll animation stay desktop-only. */}
-      <div className="relative h-[80svh] min-h-[520px] w-full overflow-hidden px-4 pb-4 pt-20 md:hidden">
+      <div className="relative h-[92svh] min-h-[600px] w-full overflow-hidden px-4 pb-4 pt-20 md:hidden">
         <div className="relative h-full overflow-hidden rounded-[22px] bg-black">
           <ResponsiveHeroImage alt="Misty highland herb garden at dawn" priority />
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-black/20" aria-hidden="true" />
