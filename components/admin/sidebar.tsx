@@ -13,7 +13,6 @@ import {
   Users2,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { openOrderCount } from "@/lib/admin"
 
 type NavItem = {
   href: string
@@ -37,7 +36,6 @@ const nav: Array<{ id: string; label: string; items: NavItem[] }> = [
         href: "/admin/orders",
         label: "Orders",
         icon: ShoppingCart,
-        badge: String(openOrderCount()),
       },
       { href: "/admin/customers", label: "Customers", icon: Users2 },
     ],
@@ -126,7 +124,7 @@ export function AdminSidebar() {
       </nav>
 
       <div className="border-t border-border px-4 py-3 text-xs text-muted-foreground">
-        Demo console · catalog from storefront
+        Live operations · catalog + orders
       </div>
     </aside>
   )

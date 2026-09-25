@@ -8,23 +8,22 @@ import { CollectionSection } from "@/components/sections/collection-section";
 import { EditorialSection } from "@/components/sections/editorial-section";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { FooterSection } from "@/components/sections/footer-section";
+import { getStore } from "@/lib/server/store";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const snapshot = await getStore().read();
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen overflow-x-clip bg-background">
       <Header />
       <HeroSection />
-<<<<<<< HEAD
-      <FeaturedProductsSection />
       <PhilosophySection />
-=======
-      <PhilosophySection />
-      <FeaturedProductsSection />
->>>>>>> origin/main
+      <FeaturedProductsSection products={snapshot.products} />
       <TechnologySection />
       <GallerySection />
-      <CollectionSection />
-      <EditorialSection />
+      <CollectionSection products={snapshot.products} />
+      <EditorialSection posts={snapshot.posts} />
       <TestimonialsSection />
       <FooterSection />
     </main>

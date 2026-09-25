@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { FadeImage } from "@/components/fade-image";
-import { products } from "@/lib/catalog";
+import type { Product } from "@/lib/catalog";
 
-export function FeaturedProductsSection() {
+export function FeaturedProductsSection({ products }: { products: Product[] }) {
   return (
     <section id="ritual" className="bg-background">
       <div className="px-6 py-20 text-center md:px-12 md:py-28 lg:px-20 lg:py-32 lg:pb-20">

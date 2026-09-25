@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { asset } from "@/lib/asset";
+import { CartLink } from "@/components/cart-link";
 
 const navLinks = [
   { href: "/#products", label: "Products" },
@@ -46,16 +47,19 @@ export function InnerHeader() {
           >
             Book a tasting
           </Link>
+          <CartLink className="text-foreground" />
         </nav>
 
-        <button
-          type="button"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden"
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <CartLink className="text-foreground" />
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
       {isMenuOpen && (

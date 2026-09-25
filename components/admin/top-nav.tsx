@@ -7,12 +7,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { AdminSidebar } from "@/components/admin/sidebar"
-import { ADMIN_SESSION_KEY } from "@/lib/admin"
 
 const titles: Record<string, { title: string; subtitle: string }> = {
   "/admin": { title: "Dashboard", subtitle: "Sales, inventory and catalog at a glance" },
   "/admin/products": { title: "Products", subtitle: "Six TDG herbal blends from the live catalog" },
-  "/admin/orders": { title: "Orders", subtitle: "Demo fulfillment queue for the US storefront" },
+  "/admin/orders": { title: "Orders", subtitle: "Live fulfillment queue from the storefront" },
   "/admin/customers": { title: "Customers", subtitle: "Tasting list and returning buyers" },
   "/admin/content": { title: "Journal", subtitle: "Editorial posts published on the storefront" },
   "/admin/media": { title: "Media", subtitle: "Packshots, lifestyle, benefits and blog covers" },
@@ -31,9 +30,10 @@ export function AdminTopNav() {
   const router = useRouter()
   const meta = resolveMeta(pathname)
 
-  function signOut() {
-    window.localStorage.removeItem(ADMIN_SESSION_KEY)
+  async function signOut() {
+    await fetch("/api/auth/logout", { method: "POST" })
     router.push("/admin/login")
+    router.refresh()
   }
 
   return (

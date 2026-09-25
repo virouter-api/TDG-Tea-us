@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { FadeImage } from "@/components/fade-image";
-import { products } from "@/lib/catalog";
+import type { Product } from "@/lib/catalog";
 
-export function CollectionSection() {
+export function CollectionSection({ products }: { products: Product[] }) {
   return (
     <section id="collection" className="bg-background">
       <div className="px-6 py-20 md:px-12 lg:px-20 md:py-10">

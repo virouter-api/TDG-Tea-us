@@ -1,5 +1,7 @@
-import { AdminMediaGrid } from "@/components/admin/media-grid"
+import { MediaLibrary } from "@/components/admin/media-library"
+
+export const dynamic = "force-dynamic"
 
 export default function AdminMediaPage() {
-  return <AdminMediaGrid />
+  return <MediaLibrary />
 }

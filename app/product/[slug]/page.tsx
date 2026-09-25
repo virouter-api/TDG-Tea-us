@@ -6,15 +6,15 @@ import { FooterSection } from "@/components/sections/footer-section";
 import { ProductGallery, type GallerySlot } from "@/components/product-gallery";
 import { ProductBuyBox } from "@/components/product-buy-box";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { brewSteps, getProduct, products } from "@/lib/catalog";
+import { brewSteps, type Product } from "@/lib/catalog";
+import { getStore } from "@/lib/server/store";
 
-export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const snapshot = await getStore().read();
+  const product = snapshot.products.find((item) => item.slug === slug);
   if (!product) return { title: "Product — TDG Tea" };
   return {
     title: `${product.name} — TDG Tea`,
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-function gallerySlots(product: NonNullable<ReturnType<typeof getProduct>>): GallerySlot[] {
+function gallerySlots(product: Product): GallerySlot[] {
   return [
     { src: product.image, alt: product.name },
     { src: product.lifestyleImage, alt: `${product.shortName} lifestyle` },
@@ -34,10 +34,11 @@ function gallerySlots(product: NonNullable<ReturnType<typeof getProduct>>): Gall
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const snapshot = await getStore().read();
+  const product = snapshot.products.find((item) => item.slug === slug);
   if (!product) notFound();
 
-  const related = products.filter((item) => item.slug !== product.slug);
+  const related = snapshot.products.filter((item) => item.slug !== product.slug);
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -79,7 +80,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 ))}
               </div>
 
-              <ProductBuyBox price={product.price} unit={product.unit} />
+              <ProductBuyBox slug={product.slug} price={product.price} unit={product.unit} />
             </div>
           </div>
 

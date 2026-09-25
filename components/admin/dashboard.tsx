@@ -1,5 +1,3 @@
-"use client"
-
 import Link from "next/link"
 import {
   ArrowUpRight,
@@ -20,47 +18,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { products } from "@/lib/catalog"
-import { posts } from "@/lib/blog"
-import {
-  channelMix,
-  customers,
-  formatUsd,
-  inventory,
-  lowStockCount,
-  monthRevenue,
-  openOrderCount,
-  orders,
-  revenueByMonth,
-} from "@/lib/admin"
 import { StatusBadge } from "@/components/admin/status-badge"
+import { formatUsd, stockTone } from "@/lib/admin-view"
+import { inventoryStatus, monthRevenue, openOrders } from "@/lib/server/catalog"
+import type { StoreSnapshot } from "@/lib/server/types"
 
-const maxRevenue = Math.max(...revenueByMonth.map((row) => row.revenue))
+export function AdminDashboard({ snapshot }: { snapshot: StoreSnapshot }) {
+  const revenue = monthRevenue(snapshot.orders)
+  const open = openOrders(snapshot.orders)
+  const lowStock = snapshot.inventory.filter((row) => inventoryStatus(row) !== "In stock").length
+  const months = lastSixMonths(snapshot)
 
-export function AdminDashboard() {
   const stats = [
-    {
-      label: "September GMV",
-      value: formatUsd(monthRevenue()),
-      hint: "+15% vs August",
-      icon: ShoppingCart,
-    },
-    {
-      label: "Open orders",
-      value: String(openOrderCount()),
-      hint: "Pending + processing",
-      icon: Box,
-    },
-    {
-      label: "Catalog SKUs",
-      value: String(products.length),
-      hint: `${lowStockCount()} need reorder`,
-      icon: Package,
-    },
+    { label: "This month GMV", value: formatUsd(revenue), hint: "Paid + pending, excluding cancelled", icon: ShoppingCart },
+    { label: "Open orders", value: String(open.length), hint: "Pending + processing", icon: Box },
+    { label: "Catalog SKUs", value: String(snapshot.products.length), hint: `${lowStock} need reorder`, icon: Package },
     {
       label: "Customers",
-      value: String(customers.length),
-      hint: `${customers.filter((c) => c.segment === "VIP").length} VIP`,
+      value: String(snapshot.customers.length),
+      hint: `${snapshot.customers.filter((c) => c.segment === "VIP").length} VIP`,
       icon: Users2,
     },
   ]
@@ -71,7 +47,7 @@ export function AdminDashboard() {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">TDG Tea operations</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Live catalog from the storefront, demo orders for the US shop.
+            Live catalog, inventory and orders from the storefront.
           </p>
         </div>
         <div className="flex gap-2">
@@ -106,41 +82,49 @@ export function AdminDashboard() {
         <Card className="lg:col-span-3">
           <CardHeader>
             <CardTitle>Revenue</CardTitle>
-            <CardDescription>Demo GMV by month · $25 / box</CardDescription>
+            <CardDescription>GMV by month from recorded orders</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex h-48 items-end gap-3">
-              {revenueByMonth.map((row) => (
-                <div key={row.month} className="flex flex-1 flex-col items-center gap-2">
-                  <div
-                    className="w-full rounded-t-md bg-primary/80"
-                    style={{ height: `${Math.max(12, (row.revenue / maxRevenue) * 100)}%` }}
-                    title={formatUsd(row.revenue)}
-                  />
-                  <span className="text-[11px] text-muted-foreground">{row.month}</span>
-                </div>
-              ))}
-            </div>
+            {months.every((row) => row.revenue === 0) ? (
+              <p className="text-sm text-muted-foreground">No orders yet this half-year.</p>
+            ) : (
+              <div className="flex h-48 items-end gap-3">
+                {months.map((row) => (
+                  <div key={row.month} className="flex flex-1 flex-col items-center gap-2">
+                    <div
+                      className="w-full rounded-t-md bg-primary/80"
+                      style={{
+                        height: `${Math.max(8, (row.revenue / Math.max(...months.map((item) => item.revenue), 1)) * 100)}%`,
+                      }}
+                      title={formatUsd(row.revenue)}
+                    />
+                    <span className="text-[11px] text-muted-foreground">{row.month}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </CardContent>
         </Card>
-
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Channels</CardTitle>
-            <CardDescription>Where boxes are moving</CardDescription>
+            <CardTitle>Inventory</CardTitle>
+            <CardDescription>Boxes on hand vs reserved</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {channelMix.map((row) => (
-              <div key={row.channel}>
-                <div className="mb-1 flex justify-between text-sm">
-                  <span>{row.channel}</span>
-                  <span className="text-muted-foreground">{row.share}%</span>
+          <CardContent className="space-y-3">
+            {snapshot.inventory.map((row) => {
+              const product = snapshot.products.find((item) => item.slug === row.slug)
+              return (
+                <div key={row.slug} className="flex items-center justify-between text-sm">
+                  <div className="min-w-0">
+                    <p className="truncate font-medium">{product?.shortName ?? row.slug}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {inventoryStatus(row)} · {row.reserved} reserved
+                    </p>
+                  </div>
+                  <span className={stockTone(row)}>{row.stock}</span>
                 </div>
-                <div className="h-2 overflow-hidden rounded-full bg-secondary">
-                  <div className="h-full bg-primary" style={{ width: `${row.share}%` }} />
-                </div>
-              </div>
-            ))}
+              )
+            })}
           </CardContent>
         </Card>
       </div>
@@ -150,7 +134,7 @@ export function AdminDashboard() {
           <CardHeader className="flex-row items-center justify-between">
             <div>
               <CardTitle>Recent orders</CardTitle>
-              <CardDescription>Latest US storefront checkouts</CardDescription>
+              <CardDescription>Newest checkouts from the US storefront</CardDescription>
             </div>
             <Button variant="ghost" size="sm" asChild>
               <Link href="/admin/orders">
@@ -159,117 +143,53 @@ export function AdminDashboard() {
             </Button>
           </CardHeader>
           <CardContent className="px-0">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="pl-6">Order</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="pr-6 text-right">Total</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {orders.slice(0, 5).map((order) => (
-                  <TableRow key={order.id}>
-                    <TableCell className="pl-6 font-medium">{order.id}</TableCell>
-                    <TableCell>
-                      <div>{order.customer}</div>
-                      <div className="text-xs text-muted-foreground">{order.city}</div>
-                    </TableCell>
-                    <TableCell>
-                      <StatusBadge status={order.status} />
-                    </TableCell>
-                    <TableCell className="pr-6 text-right">{formatUsd(order.total)}</TableCell>
+            {snapshot.orders.length === 0 ? (
+              <p className="px-6 text-sm text-muted-foreground">No orders yet.</p>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="pl-6">Order</TableHead>
+                    <TableHead>Customer</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="pr-6 text-right">Total</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {snapshot.orders.slice(0, 6).map((order) => (
+                    <TableRow key={order.id}>
+                      <TableCell className="pl-6 font-medium">{order.id}</TableCell>
+                      <TableCell>
+                        <div>{order.customer}</div>
+                        <div className="text-xs text-muted-foreground">{order.city}</div>
+                      </TableCell>
+                      <TableCell>
+                        <StatusBadge status={order.status} />
+                      </TableCell>
+                      <TableCell className="pr-6 text-right">{formatUsd(order.total)}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
           </CardContent>
         </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Inventory</CardTitle>
-            <CardDescription>Boxes on hand vs reserved</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {inventory.map((row) => (
-              <div key={row.slug} className="flex items-center justify-between text-sm">
-                <div className="min-w-0">
-                  <p className="truncate font-medium">{row.name}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {row.sku} · {row.reserved} reserved
-                  </p>
-                </div>
-                <span
-                  className={
-                    row.status === "In stock"
-                      ? "text-emerald-700"
-                      : row.status === "Low"
-                        ? "text-amber-700"
-                        : "text-rose-700"
-                  }
-                >
-                  {row.stock}
-                </span>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card>
-          <CardHeader className="flex-row items-center justify-between">
-            <div>
-              <CardTitle>Catalog</CardTitle>
-              <CardDescription>Six live SKUs on the storefront</CardDescription>
-            </div>
-            <Warehouse className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {products.map((product) => (
-              <Link
-                key={product.slug}
-                href={`/admin/products/${product.slug}`}
-                className="overflow-hidden rounded-lg border bg-background transition-colors hover:border-primary"
-              >
-                <div className="aspect-[4/5] bg-white">
-                  <img
-                    src={product.image}
-                    alt={product.shortName}
-                    className="h-full w-full object-contain"
-                  />
-                </div>
-                <div className="p-2">
-                  <p className="truncate text-xs font-medium">{product.shortName}</p>
-                  <p className="text-[11px] text-muted-foreground">{product.price}</p>
-                </div>
-              </Link>
-            ))}
-          </CardContent>
-        </Card>
-
         <Card>
           <CardHeader className="flex-row items-center justify-between">
             <div>
               <CardTitle>Journal</CardTitle>
-              <CardDescription>Editorial posts already on /blog</CardDescription>
+              <CardDescription>Editorial posts on /blog</CardDescription>
             </div>
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent className="space-y-3">
-            {posts.map((post) => (
+            {snapshot.posts.map((post) => (
               <Link
                 key={post.slug}
                 href="/admin/content"
                 className="flex gap-3 rounded-lg border p-2 hover:bg-accent"
               >
-                <img
-                  src={post.cover}
-                  alt=""
-                  className="h-14 w-20 rounded-md object-cover"
-                />
+                <img src={post.cover} alt="" className="h-14 w-20 rounded-md object-cover" />
                 <div className="min-w-0">
                   <p className="truncate text-sm font-medium">{post.title}</p>
                   <p className="text-xs text-muted-foreground">{post.label}</p>
@@ -279,6 +199,45 @@ export function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      <Card>
+        <CardHeader className="flex-row items-center justify-between">
+          <div>
+            <CardTitle>Catalog</CardTitle>
+            <CardDescription>SKUs currently on the storefront</CardDescription>
+          </div>
+          <Warehouse className="h-4 w-4 text-muted-foreground" />
+        </CardHeader>
+        <CardContent className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+          {snapshot.products.map((product) => (
+            <Link
+              key={product.slug}
+              href={`/admin/products/${product.slug}`}
+              className="overflow-hidden rounded-lg border bg-background transition-colors hover:border-primary"
+            >
+              <div className="aspect-[4/5] bg-white">
+                <img src={product.image} alt={product.shortName} className="h-full w-full object-contain" />
+              </div>
+              <div className="p-2">
+                <p className="truncate text-xs font-medium">{product.shortName}</p>
+                <p className="text-[11px] text-muted-foreground">{product.price}</p>
+              </div>
+            </Link>
+          ))}
+        </CardContent>
+      </Card>
     </div>
   )
+}
+
+function lastSixMonths(snapshot: StoreSnapshot) {
+  const now = new Date()
+  return Array.from({ length: 6 }, (_, index) => {
+    const date = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - (5 - index), 1))
+    const key = date.toISOString().slice(0, 7)
+    const revenue = snapshot.orders
+      .filter((order) => order.status !== "cancelled" && order.placedAt.startsWith(key))
+      .reduce((sum, order) => sum + order.total, 0)
+    return { month: date.toLocaleString("en-US", { month: "short" }), revenue }
+  })
 }

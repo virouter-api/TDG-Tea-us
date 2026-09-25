@@ -2,14 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { InnerHeader } from "@/components/inner-header";
 import { FooterSection } from "@/components/sections/footer-section";
-import { posts } from "@/lib/blog";
+import { getStore } from "@/lib/server/store";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "TDG Tea Journal — Herbal Wellness",
   description: "Thoughtful stories about Vietnamese herbs, daily rituals, and caring for your body.",
 };
 
-export default function BlogIndexPage() {
+export default async function BlogIndexPage() {
+  const { posts } = await getStore().read();
   return (
     <main className="min-h-screen bg-background">
       <InnerHeader />

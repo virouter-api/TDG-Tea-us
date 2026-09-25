@@ -1,9 +1,8 @@
-import { products } from "@/lib/catalog"
+import { notFound } from "next/navigation"
+import { getStore } from "@/lib/server/store"
 import { AdminProductEditor } from "@/components/admin/product-editor"
 
-export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }))
-}
+export const dynamic = "force-dynamic"
 
 export default async function AdminProductPage({
   params,
@@ -11,5 +10,9 @@ export default async function AdminProductPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  return <AdminProductEditor slug={slug} />
+  const snapshot = await getStore().read()
+  const product = snapshot.products.find((item) => item.slug === slug)
+  if (!product) notFound()
+  const inventory = snapshot.inventory.find((item) => item.slug === slug)
+  return <AdminProductEditor product={product} inventory={inventory} orders={snapshot.orders} />
 }

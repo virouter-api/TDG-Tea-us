@@ -3,15 +3,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { InnerHeader } from "@/components/inner-header";
 import { FooterSection } from "@/components/sections/footer-section";
-import { getPost, posts, type BlogBlock } from "@/lib/blog";
+import { type BlogBlock } from "@/lib/blog";
+import { getStore } from "@/lib/server/store";
 
-export function generateStaticParams() {
-  return posts.map((post) => ({ slug: post.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const snapshot = await getStore().read();
+  const post = snapshot.posts.find((item) => item.slug === slug);
   if (!post) return { title: "Journal — TDG Tea" };
   return {
     title: `${post.title} — TDG Tea Journal`,
@@ -62,7 +62,8 @@ function Block({ block }: { block: BlogBlock }) {
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const snapshot = await getStore().read();
+  const post = snapshot.posts.find((item) => item.slug === slug);
   if (!post) notFound();
 
   return (
@@ -83,7 +84,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="mt-16 border-t border-border pt-8">
           <p className="text-xs uppercase tracking-widest text-muted-foreground">More in the journal</p>
           <div className="mt-4 flex flex-col gap-3">
-            {posts
+            {snapshot.posts
               .filter((item) => item.slug !== post.slug)
               .map((item) => (
                 <Link key={item.slug} href={`/blog/${item.slug}`} className="text-lg hover:text-muted-foreground">

@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge"
-import { statusLabel, type OrderStatus } from "@/lib/admin"
+import type { OrderStatus } from "@/lib/server/types"
 import { cn } from "@/lib/utils"
 
 const styles: Record<OrderStatus, string> = {
@@ -8,6 +8,10 @@ const styles: Record<OrderStatus, string> = {
   shipped: "border-transparent bg-indigo-100 text-indigo-900",
   delivered: "border-transparent bg-emerald-100 text-emerald-900",
   cancelled: "border-transparent bg-rose-100 text-rose-900",
+}
+
+function statusLabel(status: OrderStatus) {
+  return status[0].toUpperCase() + status.slice(1)
 }
 
 export function StatusBadge({ status }: { status: OrderStatus }) {

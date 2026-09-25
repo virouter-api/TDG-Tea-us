@@ -1,37 +1,38 @@
 "use client"
 
 import { FormEvent, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Eye, EyeOff, Lock, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  ADMIN_DEMO_EMAIL,
-  ADMIN_DEMO_PASSWORD,
-  ADMIN_SESSION_KEY,
-} from "@/lib/admin"
+import { AdminApiError, adminFetch } from "@/lib/admin-client"
 
 export function AdminLoginForm() {
   const router = useRouter()
+  const search = useSearchParams()
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const [email, setEmail] = useState(ADMIN_DEMO_EMAIL)
-  const [password, setPassword] = useState(ADMIN_DEMO_PASSWORD)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
     setLoading(true)
     setError("")
-    await new Promise((resolve) => setTimeout(resolve, 400))
-    if (email.trim() !== ADMIN_DEMO_EMAIL || password !== ADMIN_DEMO_PASSWORD) {
-      setError("Use the demo credentials shown below the form.")
+    try {
+      await adminFetch("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      })
+      const next = search.get("next") || "/admin"
+      router.replace(next.startsWith("/admin") ? next : "/admin")
+      router.refresh()
+    } catch (caught) {
+      setError(caught instanceof AdminApiError ? caught.message : "Could not sign in")
       setLoading(false)
-      return
     }
-    window.localStorage.setItem(ADMIN_SESSION_KEY, "1")
-    router.replace("/admin")
   }
 
   return (
@@ -55,11 +56,10 @@ export function AdminLoginForm() {
               Operations for a six-blend herbal shop.
             </h1>
             <p className="mt-4 text-zinc-300">
-              Catalog, orders, journal and media — wired to the live TDG Tea storefront, with demo
-              commerce data until checkout is live.
+              Catalog, orders, journal and media — signed in with an HTTP-only session cookie.
             </p>
           </div>
-          <p className="text-xs text-zinc-400">Vietnamese herbs · US storefront · demo auth</p>
+          <p className="text-xs text-zinc-400">Vietnamese herbs · US storefront</p>
         </div>
       </div>
 
@@ -69,7 +69,7 @@ export function AdminLoginForm() {
             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">TDG Tea</p>
             <h2 className="mt-2 text-2xl font-semibold">Sign in to admin</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Local demo gate. No server session yet.
+              Use the operator credentials configured on the server.
             </p>
           </div>
 
@@ -84,6 +84,7 @@ export function AdminLoginForm() {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 autoComplete="username"
+                required
               />
             </div>
           </div>
@@ -99,6 +100,7 @@ export function AdminLoginForm() {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 autoComplete="current-password"
+                required
               />
               <button
                 type="button"
@@ -116,10 +118,6 @@ export function AdminLoginForm() {
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Signing in…" : "Enter console"}
           </Button>
-
-          <p className="text-xs text-muted-foreground">
-            Demo: {ADMIN_DEMO_EMAIL} / {ADMIN_DEMO_PASSWORD}
-          </p>
         </form>
       </div>
     </div>

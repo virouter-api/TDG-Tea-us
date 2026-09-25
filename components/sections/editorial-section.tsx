@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { posts } from "@/lib/blog";
+import type { BlogPost } from "@/lib/blog";
 
 const specs = [
   { label: "Caffeine", value: "None" },
@@ -11,7 +11,7 @@ const specs = [
   { label: "Steep", value: "5–7 min" },
 ];
 
-export function EditorialSection() {
+export function EditorialSection({ posts }: { posts: BlogPost[] }) {
   return (
     <section className="bg-background">
       <div className="grid grid-cols-2 border-t border-border md:grid-cols-4">
