@@ -5,6 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { asset } from "@/lib/asset";
+<<<<<<< HEAD
+=======
+import { CartLink } from "@/components/cart-link";
+>>>>>>> origin/main
 
 const navLinks = [
   { href: "/#products", label: "Products" },
@@ -40,6 +44,7 @@ export function Header() {
           : "none",
       }}
     >
+<<<<<<< HEAD
       <div className="flex items-center justify-between transition-all duration-300 px-2 pl-5 py-2">
         <Link
           href="/"
@@ -52,6 +57,22 @@ export function Header() {
             height={62}
             className="h-14 w-14 object-contain md:h-[62px] md:w-[62px]"
           />
+=======
+      <div className="flex items-center justify-between transition-all duration-300 px-3 pl-4 py-1.5 md:px-2 md:pl-5 md:py-2">
+        <Link
+          href="/"
+          className={`flex items-center gap-2 text-xl font-medium tracking-tight transition-colors duration-300 md:gap-2.5 md:text-lg ${isScrolled ? "text-foreground" : "text-white"}`}
+        >
+          <span className="relative h-9 w-9 shrink-0 overflow-hidden md:h-[62px] md:w-[62px]">
+            <Image
+              src={asset("/brand/logo-mark.png?v=3")}
+              alt="TDG Tea"
+              width={62}
+              height={62}
+              className="absolute -inset-[28%] h-[156%] w-[156%] max-w-none object-contain md:static md:h-[62px] md:w-[62px]"
+            />
+          </span>
+>>>>>>> origin/main
           <span>TDG TEA</span>
         </Link>
 
@@ -64,6 +85,10 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-6 md:flex">
+<<<<<<< HEAD
+=======
+          <CartLink className={isScrolled ? "text-foreground" : "text-white"} />
+>>>>>>> origin/main
           <Link
             href="/#reserve"
             className={`px-4 py-2 text-sm font-medium transition-all rounded-full ${isScrolled ? "bg-foreground text-background hover:opacity-80" : "bg-white text-foreground hover:bg-white/90"}`}
@@ -72,6 +97,7 @@ export function Header() {
           </Link>
         </div>
 
+<<<<<<< HEAD
         <button
           type="button"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -80,6 +106,19 @@ export function Header() {
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
+=======
+        <div className={`flex items-center gap-2 md:hidden ${isScrolled ? "text-foreground" : "text-white"}`}>
+          <CartLink className="text-current" />
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="transition-colors"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+>>>>>>> origin/main
       </div>
 
       {isMenuOpen && (
