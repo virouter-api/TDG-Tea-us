@@ -58,14 +58,10 @@ export function HeroSection() {
 
   return (
     <section ref={sectionRef} className="relative bg-[#090909]">
-      <div className="relative flex min-h-[80svh] w-full items-stretch gap-2 overflow-hidden px-2 pb-2 pt-20 md:hidden">
-        <div className="flex w-[22%] flex-col gap-2 pt-[8%]">
-          <ImageTile image={sideImages[0]} />
-          <ImageTile image={sideImages[1]} />
-        </div>
-        <div className="relative min-w-0 flex-1 overflow-hidden rounded-[22px] bg-black">
+      <div className="relative min-h-[80svh] w-full overflow-hidden px-4 pb-4 pt-20 md:hidden">
+        <div className="relative min-h-[calc(80svh-1rem)] overflow-hidden rounded-[22px] bg-black">
           <ResponsiveHeroImage alt="Misty highland herb garden at dawn" priority />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-black/20" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-black/20" aria-hidden="true" />
           <div className="absolute inset-x-5 bottom-7 z-10 text-white">
             <p className="mb-3 text-[10px] uppercase tracking-[0.24em] text-white/75">Rooted in Vietnam</p>
             <h1 className="max-w-[12ch] text-[clamp(2rem,9vw,3.4rem)] font-medium leading-[0.95] tracking-[-0.05em]">Vietnamese herbal tea for your daily rhythm</h1>
@@ -74,10 +70,6 @@ export function HeroSection() {
               <Button asChild variant="outline" className="h-11 w-full rounded-full border-white/50 bg-transparent text-white hover:bg-white hover:text-black"><Link href="#ritual">Explore the ritual</Link></Button>
             </div>
           </div>
-        </div>
-        <div className="flex w-[22%] flex-col gap-2 pt-[8%]">
-          <ImageTile image={sideImages[2]} />
-          <ImageTile image={sideImages[3]} />
         </div>
       </div>
 
