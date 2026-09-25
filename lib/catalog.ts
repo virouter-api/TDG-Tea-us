@@ -85,6 +85,7 @@ export const products: Product[] = [
     label: "Evening cup",
     price: "$25",
     unit: "per box",
+    bestSeller: true,
     summary:
       "A gentle evening infusion with a soft, rounded finish — a quiet cup before bed.",
     tagline: "A soft evening cup with a light, calming aroma.",

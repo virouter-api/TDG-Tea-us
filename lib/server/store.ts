@@ -84,10 +84,14 @@ export function createStore(options: StoreOptions) {
     if (row) {
       const parsed = JSON.parse(row.payload) as StoreSnapshot
       let changed = false
-      for (const product of parsed.products) {
+      for (const [index, product] of parsed.products.entries()) {
+        const catalogProduct = catalogProducts.find((item) => item.slug === product.slug)
         if (!Array.isArray(product.tastingNotes)) {
-          const catalogProduct = catalogProducts.find((item) => item.slug === product.slug)
           product.tastingNotes = catalogProduct?.tastingNotes ?? []
+          changed = true
+        }
+        if (index < 2 && product.bestSeller !== true) {
+          product.bestSeller = true
           changed = true
         }
       }

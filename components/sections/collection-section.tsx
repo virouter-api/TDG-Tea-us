@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FadeImage } from "@/components/fade-image";
+import { ProductCardCartButton } from "@/components/product-card-cart-button";
 import type { Product } from "@/lib/catalog";
 
 export function CollectionSection({ products }: { products: Product[] }) {
@@ -28,6 +29,14 @@ export function CollectionSection({ products }: { products: Product[] }) {
                   fill
                   className="object-contain p-1 group-hover:scale-105"
                 />
+                {product.bestSeller ? (
+                  <span className="absolute left-4 top-4 rounded-full bg-foreground px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-background">
+                    Best seller
+                  </span>
+                ) : null}
+                <div className="absolute bottom-4 right-4">
+                  <ProductCardCartButton slug={product.slug} name={product.shortName} />
+                </div>
               </div>
               <div className="py-6">
                 <div className="flex items-start justify-between gap-4">
@@ -62,6 +71,14 @@ export function CollectionSection({ products }: { products: Product[] }) {
                   fill
                   className="object-contain p-1 group-hover:scale-105"
                 />
+                {product.bestSeller ? (
+                  <span className="absolute left-4 top-4 rounded-full bg-foreground px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-background">
+                    Best seller
+                  </span>
+                ) : null}
+                <div className="absolute bottom-4 right-4">
+                  <ProductCardCartButton slug={product.slug} name={product.shortName} />
+                </div>
               </div>
               <div className="py-6">
                 <div className="flex items-start justify-between gap-4">
