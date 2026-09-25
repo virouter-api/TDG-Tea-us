@@ -267,28 +267,3 @@
 .animate-fade-in {
   animation: fadeIn 0.7s ease-out forwards;
 }
-
-@media (max-width: 767px) {
-  #origins .origin-word {
-    opacity: 1 !important;
-    filter: none !important;
-  }
-  #origins > div:first-child {
-    padding: 0.75rem 1rem;
-  }
-  #origins h2 {
-    font-size: clamp(2.25rem, 11vw, 3.5rem);
-    line-height: 0.98;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-  .will-change-transform { transform: none !important; }
-}
