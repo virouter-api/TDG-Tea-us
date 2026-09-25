@@ -1,0 +1,101 @@
+"use client"
+
+import Link from "next/link"
+import { products } from "@/lib/catalog"
+import { boxesSold, getInventory, productSku } from "@/lib/admin"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
+export function AdminProductsTable() {
+  return (
+    <div className="space-y-4">
+      <div className="flex items-end justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Products</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Source of truth is <code>lib/catalog.ts</code> — the same data the storefront renders.
+          </p>
+        </div>
+        <Button variant="outline" size="sm" disabled>
+          Add SKU (soon)
+        </Button>
+      </div>
+
+      <div className="overflow-hidden rounded-xl border bg-card">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="pl-4">Blend</TableHead>
+              <TableHead>SKU</TableHead>
+              <TableHead>Category</TableHead>
+              <TableHead>Price</TableHead>
+              <TableHead>Stock</TableHead>
+              <TableHead>Sold</TableHead>
+              <TableHead className="pr-4 text-right"> </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {products.map((product) => {
+              const stock = getInventory(product.slug)
+              return (
+                <TableRow key={product.slug}>
+                  <TableCell className="pl-4">
+                    <div className="flex items-center gap-3">
+                      <div className="h-14 w-11 overflow-hidden rounded-md border bg-white">
+                        <img
+                          src={product.image}
+                          alt=""
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+                      <div>
+                        <p className="font-medium">{product.shortName}</p>
+                        <p className="text-xs text-muted-foreground">{product.nameAscii}</p>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="font-mono text-xs">{productSku(product)}</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">{product.label}</Badge>
+                  </TableCell>
+                  <TableCell>
+                    {product.price}{" "}
+                    <span className="text-muted-foreground">/ {product.unit}</span>
+                  </TableCell>
+                  <TableCell>
+                    <span
+                      className={
+                        stock?.status === "In stock"
+                          ? "text-emerald-700"
+                          : stock?.status === "Low"
+                            ? "text-amber-700"
+                            : "text-rose-700"
+                      }
+                    >
+                      {stock?.stock ?? "—"}
+                    </span>
+                    <span className="ml-1 text-xs text-muted-foreground">{stock?.status}</span>
+                  </TableCell>
+                  <TableCell>{boxesSold(product.slug)}</TableCell>
+                  <TableCell className="pr-4 text-right">
+                    <Button variant="ghost" size="sm" asChild>
+                      <Link href={`/admin/products/${product.slug}`}>Edit</Link>
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  )
+}
