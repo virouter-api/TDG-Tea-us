@@ -100,7 +100,7 @@ export function HeroSection() {
                 <div className="absolute inset-0 flex items-end overflow-hidden" style={{ opacity: textOpacity }}>
                   <div className="w-full px-6 pb-8 text-white md:px-8 md:pb-10">
                     <p className="mb-4 text-[10px] uppercase tracking-[0.22em] text-white/75">Rooted in Vietnam · Made for everyday rituals</p>
-                    <h1 className="max-w-[8ch] text-[clamp(4rem,8vw,8rem)] font-medium leading-[0.86] tracking-[-0.06em]">Vietnamese herbal tea for your daily rhythm</h1>
+                    <h1 className="max-w-[11ch] text-[clamp(3.5rem,6.7vw,7rem)] font-medium leading-[0.88] tracking-[-0.06em]">Vietnamese herbal tea for your daily rhythm</h1>
                     <p className="mt-5 max-w-[34ch] text-sm leading-relaxed text-white/80">Thoughtful blends of Vietnamese botanicals, made to meet the pace of your day.</p>
                     <div className="mt-5 flex gap-3">
                       <a href="#collection" className="inline-flex h-10 items-center justify-center rounded-full bg-white px-5 text-xs font-medium text-black">Shop the collection</a>
