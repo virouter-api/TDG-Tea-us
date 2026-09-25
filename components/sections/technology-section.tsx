@@ -121,14 +121,14 @@ export function TechnologySection() {
 
   return (
     <section id="origins" ref={sectionRef} className="relative bg-foreground">
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div className="top-0 h-[80svh] overflow-hidden md:sticky md:h-screen">
         <div className="flex h-full w-full items-center justify-center">
           <div
             className="relative flex h-full w-full items-stretch justify-center"
             style={{ gap: `${gap}px`, padding: `${imageProgress * 16}px` }}
           >
             <div
-              className="flex flex-col will-change-transform"
+              className="hidden flex-col will-change-transform md:flex"
               style={{
                 width: `${sideWidth}%`,
                 gap: `${gap}px`,
@@ -153,7 +153,7 @@ export function TechnologySection() {
             </div>
 
             <div
-              className="relative overflow-hidden will-change-transform"
+              className="relative !w-full overflow-hidden will-change-transform md:!w-auto"
               style={{
                 width: `${centerWidth}%`,
                 height: "100%",
@@ -184,7 +184,7 @@ export function TechnologySection() {
                     return (
                       <span
                         key={index}
-                        className="inline-block"
+                        className="origin-word inline-block"
                         style={{
                           opacity: wordOpacity,
                           filter: `blur(${wordBlur}px)`,
@@ -202,7 +202,7 @@ export function TechnologySection() {
             </div>
 
             <div
-              className="flex flex-col will-change-transform"
+              className="hidden flex-col will-change-transform md:flex"
               style={{
                 width: `${sideWidth}%`,
                 gap: `${gap}px`,
@@ -229,7 +229,7 @@ export function TechnologySection() {
         </div>
       </div>
 
-      <div className="h-[200vh]" />
+      <div className="hidden h-[200vh] md:block" />
 
       <div
         ref={textSectionRef}
