@@ -74,7 +74,16 @@ export function HeroSection() {
       <div className="relative h-[80svh] min-h-[520px] w-full overflow-hidden px-4 pb-4 pt-20 md:hidden">
         <div className="relative h-full overflow-hidden rounded-[22px] bg-black">
           <ResponsiveHeroImage alt="Misty highland herb garden at dawn" priority />
-          <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-black/20" aria-hidden="true" />
+          <div className="absolute inset-x-6 bottom-8 z-10 text-white">
+            <p className="mb-3 text-[10px] uppercase tracking-[0.22em] text-white/75">Rooted in Vietnam · Made for everyday rituals</p>
+            <h1 className="max-w-[11ch] text-[clamp(2.7rem,11vw,4.4rem)] font-medium leading-[0.88] tracking-[-0.06em]">Vietnamese herbal tea for your daily rhythm</h1>
+            <p className="mt-4 max-w-[30ch] text-sm leading-relaxed text-white/80">Thoughtful blends of Vietnamese botanicals, made to meet the pace of your day.</p>
+            <div className="mt-5 flex flex-col gap-2">
+              <a href="#collection" className="inline-flex h-11 items-center justify-center rounded-full bg-white px-6 text-sm font-medium text-black">Shop the collection</a>
+              <a href="#ritual" className="inline-flex h-11 items-center justify-center rounded-full border border-white/50 px-6 text-sm font-medium text-white">Explore the ritual</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -89,7 +98,15 @@ export function HeroSection() {
               <div className="relative overflow-hidden will-change-transform" style={{ width: `${centerWidth}%`, height: `${centerHeight}%`, flex: "0 0 auto", borderRadius: `${borderRadius}px` }}>
                 <ResponsiveHeroImage alt="Misty highland herb garden at dawn" priority />
                 <div className="absolute inset-0 flex items-end overflow-hidden" style={{ opacity: textOpacity }}>
-                  <h1 className="w-full text-[18vw] font-medium leading-[0.8] tracking-tighter text-white md:text-[16vw]">TDG TEA</h1>
+                  <div className="w-full px-6 pb-8 text-white md:px-8 md:pb-10">
+                    <p className="mb-4 text-[10px] uppercase tracking-[0.22em] text-white/75">Rooted in Vietnam · Made for everyday rituals</p>
+                    <h1 className="max-w-[8ch] text-[clamp(4rem,8vw,8rem)] font-medium leading-[0.86] tracking-[-0.06em]">Vietnamese herbal tea for your daily rhythm</h1>
+                    <p className="mt-5 max-w-[34ch] text-sm leading-relaxed text-white/80">Thoughtful blends of Vietnamese botanicals, made to meet the pace of your day.</p>
+                    <div className="mt-5 flex gap-3">
+                      <a href="#collection" className="inline-flex h-10 items-center justify-center rounded-full bg-white px-5 text-xs font-medium text-black">Shop the collection</a>
+                      <a href="#ritual" className="inline-flex h-10 items-center justify-center rounded-full border border-white/50 px-5 text-xs font-medium text-white">Explore the ritual</a>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="flex flex-col will-change-transform" style={{ width: `${sideWidth}%`, gap: `${gap}px`, transform: `translateX(${sideTranslateRight}%) translateY(${sideTranslateY}%)`, opacity: sideOpacity }}>
